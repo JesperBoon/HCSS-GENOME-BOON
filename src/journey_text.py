@@ -44,21 +44,6 @@ TEXT = {
         "'say one thing, do another' pattern this app is built to catch turns out to be the exception, not the "
         "rule - which only sections C and D together could show."
     ),
-    "map_why": (
-        "Before picking any one angle, it was worth rebuilding GENOME's own world map from the raw event counts - "
-        "not because the result would be new, but to see firsthand what the data actually looks like at the "
-        "country level: how lopsided event volume is, which countries barely appear, how conflict share "
-        "concentrates in a handful of relationships. That groundwork is what later justified the min-events "
-        "thresholds used everywhere else in this app, instead of picking them arbitrarily."
-    ),
-    "map_reading": (
-        "Iran's profile page is a good example of what this view is for, and what it is not: 9,742 events as an "
-        "actor, 61% of them conflict, and the monthly stacked bar makes clear that is not one steady level but a "
-        "series of jumps. What it cannot do is tell a policymaker why a month spiked, or how the countries on the "
-        "other end of those events would describe them - for that you need the actual events, which is why the "
-        "newest-events feed (type, intensity, report count, an expandable summary) sits directly below the chart "
-        "instead of on a separate page."
-    ),
     "clusters_intro": (
         "Sections A through D look at countries one at a time, toward one conflict. But countries also cooperate "
         "with each other more broadly, and the shape of who-cooperates-with-whom is a signal independent of any "
@@ -184,8 +169,6 @@ HINTS = {
     "intro": "Where you started: first the data without credits, then a first analysis to see whether a reliability factor is feasible.",
     "movement": "How you went from static scores to movement: why a rolling window, what the lines and the animation show about the US, China, India and others, and why short windows only work for big players.",
     "side_all": "How to read the chart: who leans where, and who sits in the middle (the 'strange ducks' that pick no side).",
-    "map_why": "Why you rebuilt the GENOME map: what you wanted to learn about the data before choosing an angle.",
-    "map_reading": "What you noticed while exploring the map, and what it cannot tell a policymaker.",
     "clusters_intro": "Why you moved from pairs to blocks: what a block is (and is not), and the one result you most want a policymaker to remember.",
     "clusters_map": "What you see on the two maps: which blocks, where words and actions disagree, which countries are grey and why.",
     "clusters_brokers": "Who bridges the blocks and why that matters (and why a bridge score only counts above chance).",
