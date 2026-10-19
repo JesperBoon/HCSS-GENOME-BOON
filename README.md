@@ -7,9 +7,13 @@
 **[hcss-genome-boon.streamlit.app](https://hcss-genome-boon-wx7cuphe7nefwemmcfrkb4.streamlit.app/)** — one link, no
 setup, nothing to install.
 
+**[Read how the data was processed](DATA_PROCESSING.md)** — the cleaning, filtering and feature-engineering steps
+behind every chart, file by file, with a worked example.
+
 **Do countries mean what they say?** This dashboard asks whether countries' words and their material actions point
 the same way, country by country, conflict by conflict, and bloc by bloc, for the HCSS Datalab technical assignment
-2026: data processing, analysis and communication of results, all in one interactive app.
+2026: data processing, analysis and communication of results — the first in [DATA_PROCESSING.md](DATA_PROCESSING.md),
+the rest in the app itself.
 
 To run it locally instead:
 
