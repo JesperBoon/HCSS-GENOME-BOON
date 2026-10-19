@@ -30,8 +30,8 @@ if not mt.COUNTS.exists():
 data = load_data()
 
 with st.sidebar:
-    if os.path.exists("assets/hcss_logo.png"):
-        st.image("assets/hcss_logo.png", width=140)
+    if os.path.exists("assets/HCSS_logo-scaled.jpg"):
+        st.image("assets/HCSS_logo-scaled.jpg", width=140)
     st.title("Reliability in GENOME")
     st.caption("A journey from the GENOME map to a reliability meter")
     page = st.radio(
