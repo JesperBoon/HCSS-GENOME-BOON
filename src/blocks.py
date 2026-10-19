@@ -79,5 +79,5 @@ def blocks_map(world: dict, category: str = "cooperation", period: str = "all", 
             dict(label="material blocks", method="update",
                 args=[{"visible": [False, True]}, {"title": f"Support blocks by material actions ({category}, {period})"}]),
         ], x=0, y=1.08, xanchor="left", direction="down")],
-        margin=dict(l=0, r=0, t=70, b=0), height=500)
+        margin=dict(l=0, r=0, t=70, b=0), height=650)
     return fig

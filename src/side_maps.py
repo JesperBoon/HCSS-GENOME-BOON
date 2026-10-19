@@ -67,6 +67,6 @@ def conflict_explorer(world: dict, rng: float = 2.0) -> go.Figure:
     fig.update_layout(
         geo=dict(domain=dict(x=[0, 0.72], y=[0, 1]), **geo), geo2=dict(domain=dict(x=[0.76, 1], y=[0.25, 0.75]), **geo),
         updatemenus=[dict(buttons=buttons, x=0, y=1.0, xanchor="left", yanchor="bottom", direction="down")],
-        margin=dict(l=0, r=0, t=110, b=0), height=520)
+        margin=dict(l=0, r=0, t=110, b=0), height=680)
     fig.update_layout(annotations=buttons[0]["args"][1]["annotations"])
     return fig

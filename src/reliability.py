@@ -98,5 +98,5 @@ def reliability_map(world: dict, periods: tuple[str, str, str] = DEFAULT_PERIODS
         title=f"Reliability score: words vs. actions, {periods[0]}-{periods[-1]} "
               f"({len(a)} countries with enough steady data)")
     fig.update_geos(showframe=False, showcoastlines=False, projection_type="natural earth")
-    fig.update_layout(margin=dict(l=0, r=0, t=50, b=0))
+    fig.update_layout(margin=dict(l=0, r=0, t=50, b=0), height=600)
     return fig

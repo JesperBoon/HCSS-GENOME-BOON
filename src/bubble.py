@@ -49,6 +49,6 @@ def reliability_bubble(conflict: str, first_id: int, second_id: int, window: int
         title=f"Words vs. deeds toward {first} and {second} (rolling {window}-week window, min {min_n} events/dot)")
     fig.add_hline(y=0, line_color="lightgray", line_width=1)
     fig.add_vline(x=0, line_color="lightgray", line_width=1)
-    fig.update_layout(height=600, legend_title_text="Friendlier toward")
+    fig.update_layout(height=750, legend_title_text="Friendlier toward")
     fig.update_traces(marker=dict(line=dict(width=0.5, color="white")))
     return fig
