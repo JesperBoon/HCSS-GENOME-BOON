@@ -40,17 +40,10 @@ class Conflict:
 
 
 def your_words(key: str):
-    """Show the author's text for a journey step, or a placeholder box if still empty."""
+    """Show the author's text for a journey step, if there is one."""
     text = TEXT.get(key, "").strip()
     if text:
         st.markdown(text)
-    else:
-        st.markdown(
-            f"<div style='border:2px dashed #A6BDDB;border-radius:8px;padding:12px 16px;"
-            f"color:#5A6B85;background:#FFFFFF'><b>Your thoughts here</b> "
-            f"<code>{key}</code><br><i>{HINTS.get(key, '')}</i></div>",
-            unsafe_allow_html=True,
-        )
 
 
 @st.cache_data(show_spinner=False)

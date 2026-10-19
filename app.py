@@ -18,7 +18,7 @@ for folder in (os.path.join(ROOT, "src"), ROOT):   # src: logic; ROOT: the `view
         sys.path.insert(0, folder)
 
 import metrics as mt
-from views import analysis, case_page, chains_page, clusters_page, map_page, placeholders
+from views import analysis, case_page, chains_page, clusters_page, map_page
 from views.common import load_data
 
 st.set_page_config(page_title="Reliability in GENOME", page_icon="🌍", layout="wide")
@@ -37,7 +37,7 @@ with st.sidebar:
     page = st.radio(
         "Navigation",
         ["1 · Starting analysis", "2 · Support clusters", "3 · The map", "4 · Support chains",
-         "5 · Case studies", "6 · Escalation ladder", "7 · Limits & next steps"],
+         "5 · Case studies"],
         label_visibility="collapsed",
     )
     st.divider()
@@ -53,7 +53,5 @@ elif page.startswith("3"):
     map_page.render(data)
 elif page.startswith("4"):
     chains_page.render(data)
-elif page.startswith("5"):
-    case_page.render(data)
 else:
-    placeholders.render(page)
+    case_page.render(data)

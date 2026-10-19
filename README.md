@@ -1,24 +1,30 @@
 # Reliability in GENOME
 
-**Read the notebook:** [Road to Reliability (HTML, opens in any browser)](https://htmlpreview.github.io/?https://github.com/JesperBoon/HCSS-GENOME-BOON/blob/story/Road_to_Reliability.html)
-
-**Do countries mean what they say, and does support travel through them?** Three new domain angles for the HCSS
-Datalab GENOME event data, built for the HCSS Datalab technical assignment 2026.
-
-GENOME turns the world's news into structured events: who did what to whom, classified into 16 event types on a
-conflict/cooperation and a verbal/material axis. The existing angles navigate this data by *country*, *organisation*
-and *leader*. This project adds more, all built on the same fields (agents and roles, event types, the two axes,
-dates) and **built on the free API**. The only credits used (450 of 10,000) went into one deliberate check that the free
-route is complete, see section 2c:
-
-1. **Reliability:** how a country behaves toward the *two sides of a conflict*; whether its words and actions point
-   the same way; whether its position moves over time.
-2. **Support chains:** who is *reported* passing material support on to whom (A helps B, B helps C), whether that is
-   more than busy countries produce by chance, and whether cooperative *words* come before material support.
-3. **Support clusters:** which groups (*blocks*) of countries cooperate far more among themselves than their number of
-   reports explains, who bridges the blocks, and where the blocks formed by *words* differ from those formed by *actions*.
-
 ![HCSS](assets/hcss_logo.png)
+
+## Road to Reliability — the deliverable
+
+**[Read the notebook](https://htmlpreview.github.io/?https://github.com/JesperBoon/HCSS-GENOME-BOON/blob/story/Road_to_Reliability.html)** (HTML, opens in any browser, no setup needed).
+
+**Do countries mean what they say?** *Road to Reliability* is a narrative walk through GENOME event data asking whether
+countries' words and their material actions point the same way, country by country, conflict by conflict, and
+bloc by bloc. It is the technical assignment deliverable: data processing, analysis and communication of results,
+in that order, told as the sequence of choices that actually produced it.
+
+Everything from here down is the wider dashboard project the notebook draws on and grew out of — kept as reference
+and as an optional "try it yourself" companion (tagged `dashboard-v1`), not itself the thing being graded.
+
+---
+
+## The dashboard companion
+
+```bash
+.venv/bin/pip install -r requirements.txt
+.venv/bin/streamlit run app.py          # opens http://localhost:8501
+```
+
+No API key needed; the committed data in `data/processed/` is enough to run it after a clone. See section 5 below
+for the full setup and section 3 for what each page shows.
 
 ---
 
@@ -260,10 +266,8 @@ firm block, the whole period: 37), so the dashboard analyses the whole period wi
 | **3 · The map** | World map by month; colour by events or conflict share; click a country for its profile and newest events |
 | **4 · Support chains** | A) map of reported support (arcs, period, follow one country two steps back and forward); B) are the chains more than volume; C) do words come before support, 2 × 2, candidate latent paths |
 | **5 · Case studies** | Four cases: the blocks around a party, who supplies it (Sankey with time slider), the events behind a path and an optional AI summary |
-| **6 · Escalation ladder** | Placeholder: event sequences for a few relationships with API credits (not built) |
-| **7 · Limits & next steps** | Placeholder for the author's reflection |
 
-Every section has a box for the author's own words (`src/journey_text.py`); empty boxes show a dashed placeholder.
+Some sections have a box for the author's own words (`src/journey_text.py`); left empty, it is simply not shown.
 
 ---
 
@@ -354,7 +358,6 @@ views/                         One module per page
   clusters_page.py             Page 2 (support clusters)
   chains_page.py               Page 4 (support chains)
   case_page.py                 Page 5 (case studies)
-  placeholders.py              Pages 6 and 7
   common.py                    Shared loaders, constants, the "how to read this" note
 src/
   taxonomy.py                  THE grouping of the 16 event types into words/actions (one constant)
