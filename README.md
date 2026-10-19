@@ -1,7 +1,5 @@
 # Reliability in GENOME
 
-![HCSS](assets/hcss_logo.png)
-
 ## Open the dashboard
 
 **[hcss-genome-boon.streamlit.app](https://hcss-genome-boon-wx7cuphe7nefwemmcfrkb4.streamlit.app/)** — one link, no
