@@ -1,5 +1,7 @@
 # Reliability in GENOME
 
+**Read the notebook:** [Road to Reliability (HTML, opens in any browser)](https://htmlpreview.github.io/?https://github.com/JesperBoon/HCSS-GENOME-BOON/blob/story/Road_to_Reliability.html)
+
 **Do countries mean what they say, and does support travel through them?** Three new domain angles for the HCSS
 Datalab GENOME event data, built for the HCSS Datalab technical assignment 2026.
 
