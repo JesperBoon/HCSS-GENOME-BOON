@@ -1,6 +1,6 @@
-"""Page 4: support chains. Who passes material support on to whom, and is that more than volume alone?
+"""Step 3: support chains. Who passes material support on to whom?
 
-Sections: A the map of reported support, B are the chains more than volume, C do words come before support.
+Sections: A the map of reported support, B do words come before support.
 Everything is built from free count and page-1 data; the heavy statistics are precomputed by
 scripts/build_chain_results.py.
 """
@@ -31,21 +31,7 @@ SELECTIONS = {
 
 def _plain_summary(res: dict, n_countries: int, n_events: int, end: str) -> str:
     """A few sentences without jargon, with the numbers read from the precomputed tables."""
-    s = res["summary"]
-    base = s[(s.definition == "aid") & (s.kind == "support") & (s.window_weeks == 4)]
     parts = [f"Between January 2024 and {end}, the news reports **{n_events:,} aid events** between {n_countries} countries."]
-    if len(base) == 2:
-        sh, ma = base[base["null"] == "shuffle"].iloc[0], base[base["null"] == "matched"].iloc[0]
-        n_sh, n_ma = int(sh["q_le_0.10"]), int(ma["q_le_0.10"])
-        if n_sh == 0 and n_ma == 0:
-            verdict = ("**None** of them stands out once we allow for how much each country is in the news, "
-                       "and none does when we also allow for weeks in which everything is busy at once.")
-        else:
-            verdict = (f"After allowing for how much each country is in the news, **{n_sh}** of these chains stand "
-                       f"out; after also allowing for weeks in which everything is busy at once, **{n_ma}** remain.")
-        parts.append(f"In **{int(ma.tested):,}** cases a country that is reported receiving aid is also reported "
-                     f"giving aid to a third country within weeks. Most of that is what busy countries produce by "
-                     f"chance. {verdict}")
     p = res["prediction"]
     row = p[(p.material == "aid") & p.only_new & (p.k_verbal == 3) & (p.outcome_min == 1) & p.ok.astype(bool)]
     if len(row):
@@ -92,99 +78,9 @@ def _arcs_figure(pairs: pd.DataFrame, cent: dict, names: dict, color: str, up: p
     return fig, len(pairs)
 
 
-def _tests_section(res: dict, names: dict, nodes: list) -> None:
-    """Section B: are the chains more than volume alone? Precomputed tables, selectable settings."""
-    st.subheader("B · Are these chains more than busy countries doing busy things?")
-    st.markdown(
-        "A big country is in the news all the time, so chains through it appear **by volume alone**. For every chain "
-        "we compare its weight with what the same events would give if their timing were moved around at random, and "
-        "we only call a chain interesting when it stands out from that. Two versions of the comparison:\n\n"
-        "- **Volume only:** each country pair's events are moved to any week.\n"
-        "- **Volume and shared busy weeks:** events can only move to weeks that are about equally busy for everyone, "
-        "so a war week in which everything happens at once does not count as coordination.\n\n"
-        "With over a thousand chains tested, some always look special by luck, so the *remaining* counts below are "
-        "corrected for that (false discovery rate 10%).")
-    your_words("chains_stats")
-    c1, c2, c3, c4 = st.columns(4)
-    kind = c1.radio("What follows what", ["support", "to_conflict"], horizontal=False,
-                    format_func=lambda k: {"support": "Aid, then more aid", "to_conflict": "Aid, then an attack"}[k])
-    definition = c2.radio("Aid counted as", ["aid", "material"], horizontal=False,
-                          format_func=lambda d: {"aid": "Aid only", "material": "Aid, cooperation, de-escalation"}[d])
-    window = c3.radio("Window (weeks)", [2, 4, 8], index=1, horizontal=False,
-                      help="Support is passed on 'in the same or the next window'. Longer windows are looser: more "
-                           "chains qualify, and the order is known less precisely.")
-    null = c4.radio("Compare with", ["matched", "shuffle"], horizontal=False,
-                    format_func=lambda n: {"matched": "Volume and shared busy weeks", "shuffle": "Volume only"}[n])
-
-    s = res["summary"]
-    row = s[(s.definition == definition) & (s.kind == kind) & (s.window_weeks == window) & (s["null"] == null)]
-    if row.empty:
-        st.info("This combination has not been computed.")
-        return
-    r = row.iloc[0]
-    survivors = int(r["q_le_0.10"])
-    st.markdown(
-        f"**{int(r.tested):,}** chains with weight 3 or more were tested. **{int(r['p_le_0.01'])}** pass an uncorrected "
-        f"1% test, while pure chance would give about **{r.expected_by_chance:.0f}**. After the correction "
-        f"**{survivors}** chain{'s' if survivors != 1 else ''} remain.")
-
-    t = res["chains"]
-    t = t[(t.definition == definition) & (t.kind == kind) & (t.window_weeks == window) & (t["null"] == null)]
-    only_sig = st.toggle("Only chains that stand out (corrected)", value=True)
-    shown = t[t.q <= 0.10] if only_sig else t
-    if only_sig and shown.empty:
-        st.info("No chain stands out in this setting. That is a result too: the big chains here are explained by "
-                "volume" + (" and shared busy weeks." if null == "matched" else "."))
-    elif len(shown):
-        tbl = shown.sort_values(["weight"], ascending=False).head(40)[
-            ["chain", "weight", "same_window", "next_window", "expected", "z", "q"]]
-        tbl.columns = ["Chain", "Weight", "Same window", "Next window", "Expected by chance", "Z-score", "Corrected p"]
-        st.dataframe(tbl.round(3), hide_index=True, width="stretch",
-                     height=min(420, 40 + 35 * len(tbl)),
-                     column_config={"Weight": st.column_config.NumberColumn(
-                         help="Sum over windows of the weaker of the two links. 'Same window': order unknown. "
-                              "'Next window': the second link comes in the window after the first.")})
-
-    # sensitivity to the window length and the null model
-    sens = s[(s.definition == definition) & (s.kind == kind)].pivot_table(
-        index="window_weeks", columns="null", values="q_le_0.10", aggfunc="first")
-    sens.columns = [{"matched": "Volume and shared busy weeks", "shuffle": "Volume only"}[c] for c in sens.columns]
-    sens.index = [f"{w} weeks" for w in sens.index]
-    with st.expander("How sensitive is this to the window length and the comparison?"):
-        st.caption("Chains that remain after correction, for each window length and each way of comparing.")
-        st.dataframe(sens, width="stretch")
-        st.caption("A chain worth taking seriously should appear for more than one window length. "
-                   "If the numbers jump around, treat single chains as leads, not findings.")
-
-    # brokers and cycles
-    with st.expander("Countries that pass support on, and loops"):
-        b = res["brokers"]
-        b = b[b["null"] == null].sort_values("score", ascending=False).head(12)
-        st.markdown("**Pass-on score** (aid, 4-week windows): for each country the sum over windows of the smaller "
-                    "of the aid it receives and the aid it gives. High means it is reported receiving and giving "
-                    "in the same period.")
-        st.dataframe(b[["country", "score", "expected", "z", "q"]].rename(columns={
-            "country": "Country", "score": "Score", "expected": "Expected by chance", "z": "Z-score",
-            "q": "Corrected p"}).round(2), hide_index=True, width="stretch")
-        cyc = res["cycles"]
-        if cyc.empty:
-            st.markdown("**Loops** (A → B → C → A within two consecutive windows): none found in the aid graph.")
-        else:
-            cyc = cyc.assign(q=ch.benjamini_hochberg(cyc.p.values))
-            n_sig = int((cyc.q <= 0.10).sum())
-            st.markdown(
-                f"**Loops** (A → B → C → A within two consecutive windows): **{len(cyc)}** are reported in the aid "
-                f"graph. After correcting for the number of loops tested, **{n_sig}** are more frequent than busy "
-                f"countries would produce by chance" + (": " if n_sig else "; the rest are what volume alone gives."))
-            shown = cyc.sort_values("p").head(10)
-            st.dataframe(shown[["cycle", "weight", "expected", "q"]].rename(columns={
-                "cycle": "Loop", "weight": "Weight", "expected": "Expected by chance", "q": "Corrected p"}).round(3),
-                hide_index=True, width="stretch")
-
-
 def _words_section(res: dict, names: dict, nodes: list, chains_df: pd.DataFrame) -> None:
-    """Section C: do cooperative words come before material support?"""
-    st.subheader("C · Do cooperative words come before material support?")
+    """Section B: do cooperative words come before material support?"""
+    st.subheader("B · Do cooperative words come before material support?")
     st.markdown(
         "Words (statements, talks, agreements) are cheap and show up long before aid. We ask: country pairs that "
         "exchanged cooperative words in the first part of the period, do they get a *material* link later more often "
@@ -289,7 +185,7 @@ def _words_section(res: dict, names: dict, nodes: list, chains_df: pd.DataFrame)
 
 
 def render(data: Data) -> None:
-    st.title("Step 4 · Support chains")
+    st.title("Step 3 · Support chains")
     files = load_edges()
     if files is None:
         st.error("No event data yet. Run `.venv/bin/python scripts/build_edge_counts.py --run` (free, ~10 minutes).")
@@ -356,7 +252,5 @@ def render(data: Data) -> None:
         st.warning("The chain statistics have not been computed yet. Run "
                    "`.venv/bin/python scripts/build_chain_results.py` (about 15 minutes, free).")
         return
-    st.divider()
-    _tests_section(res, names, nodes)
     st.divider()
     _words_section(res, names, nodes, res["chains"])

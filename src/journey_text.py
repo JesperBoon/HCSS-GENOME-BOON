@@ -60,27 +60,6 @@ TEXT = {
         "largest countries exists so a block isn't accidentally just 'the countries closest to the biggest "
         "player' - that has to survive being checked, not be assumed."
     ),
-    "clusters_brokers": (
-        "Blocks describe where most of a country's cooperation goes; brokers are the exception that connect blocks "
-        "to each other instead of sitting inside one. The bridge-score table (UAE, Turkey, Kuwait stand out here) is "
-        "corrected against chance, because any country with many partners looks like a 'bridge' by volume alone - "
-        "the correction is what separates an actual broker from a country that is simply active.\n\n"
-        "The flows-between-blocks heatmap is the block-level version of the same question: not which countries "
-        "bridge, but how much cooperation crosses block lines at all. And the adversaries check - 29% of conflict "
-        "events fall inside the same cooperation block, against 26% by chance - answers something the maps alone "
-        "can't: these blocks are not simply 'sides' of the world's conflicts. Neighbours cooperate and fight the "
-        "same neighbours; cooperation blocks are regional, not alliance camps."
-    ),
-    "clusters_words": (
-        "This is the group-level version of section D's words/actions question. Where words and actions assign a "
-        "country to different blocks, that country's rhetoric is not just imprecise about one relationship - it "
-        "points toward an entirely different set of partners than its behaviour does. Agreement between the two "
-        "groupings is modest (adjusted Rand index 0.22, 95% interval 0.14-0.36 against a permutation null of 0.00), "
-        "and whether earlier words-based blocks predict later material cooperation is tested directly rather than "
-        "assumed - the honest answer is that they predict weakly. 'Candidate latent tie' is used instead of "
-        "'hidden tie' for the same reason section D's one mismatch mattered more than the 56 agreements: a weak or "
-        "absent prediction is the result, not a failure of the method."
-    ),
     "clusters_sure": (
         "Every block above comes from one clustering run, and clustering is sensitive to exactly how the "
         "underlying graph is built. Before trusting any block, the pipeline is rerun 100 times on resampled data; a "
@@ -89,18 +68,6 @@ TEXT = {
         "here' into 'there is a block here that is not just what volume alone would produce'. Removing the largest "
         "country and re-clustering checks the last obvious failure mode: that the whole pattern is really just "
         "'everyone's relationship to one dominant country', dressed up as blocks."
-    ),
-    "clusters_time": (
-        "Blocks are not static, and a country changing block over time is a different kind of signal than a "
-        "country disagreeing between words and actions at one point - it is about alignment moving, not about "
-        "being inconsistent. This view exists so a reader can see realignment happening, instead of only seeing the "
-        "end state the other tabs show."
-    ),
-    "clusters_chains": (
-        "Blocks say who cooperates with whom in aggregate; they don't say whether that cooperation is direct or "
-        "passed along through others. This tab connects back to section 4's chain analysis - placing the chains "
-        "inside the block structure shows whether support mostly moves within a block (reinforcing it) or crosses "
-        "between blocks, which would make a block boundary look firmer on the map than it actually is in practice."
     ),
     "chains_intro": (
         "'Which side does a country take' and 'who does a country actually pass support to' are different "
@@ -115,15 +82,6 @@ TEXT = {
         "read as a whole. The biggest gap in this map, worth stating plainly: organisations (EU, NATO, UN) have no "
         "country id in GENOME and cannot appear here at all, even though a large share of real aid is organised "
         "through them. What's shown is a map of countries, not of how aid actually moves."
-    ),
-    "chains_stats": (
-        "A chain that looks 'coordinated' can simply be two busy countries doing a lot of things in the same "
-        "period - a war week makes everyone look coordinated at once. That is why 1,168 tested chains are compared "
-        "against a shuffled version of the same data that preserves each country's total activity, and in the "
-        "stricter version only shuffles events into equally busy windows. 30 chains pass an uncorrected 1% "
-        "threshold where chance alone would produce about 12 - but after correcting for testing over a thousand "
-        "chains at once, 0 remain. That null result is reported here rather than hidden, because 'most apparent "
-        "support chains are just volume' is the honest finding of this section, not a dead end."
     ),
     "chains_words": (
         "If support often arrives through a chain rather than directly, do words at least predict where new "
@@ -171,14 +129,9 @@ HINTS = {
     "side_all": "How to read the chart: who leans where, and who sits in the middle (the 'strange ducks' that pick no side).",
     "clusters_intro": "Why you moved from pairs to blocks: what a block is (and is not), and the one result you most want a policymaker to remember.",
     "clusters_map": "What you see on the two maps: which blocks, where words and actions disagree, which countries are grey and why.",
-    "clusters_brokers": "Who bridges the blocks and why that matters (and why a bridge score only counts above chance).",
-    "clusters_words": "What it means that words and actions only partly agree; candidate latent ties versus empty words; why the prediction is weak.",
     "clusters_sure": "How much you trust the blocks: certainty, the comparison with chance, the effect of leaving out the biggest country.",
-    "clusters_time": "Which countries change block, and when; what is behind it.",
-    "clusters_chains": "How the chains fit inside the blocks; what you would do with them.",
     "chains_intro": "Why you moved from 'which side' to 'who passes support on to whom': what a chain is and what it is not.",
     "chains_map": "What you notice on the map: the biggest flows, the hubs, what is missing (organisations, meetings).",
-    "chains_stats": "Why the comparison with chance matters, and what it means that most chains disappear after the correction.",
     "chains_words": "What the words-before-aid result does and does not tell you; why you call a words-only tie 'candidate', not 'hidden'.",
     "case_intro": "How you chose the cases and what you hope to see in them.",
     "case_ukraine": "What the supplier picture around Ukraine (or Russia) shows, and one path you looked at closely.",
