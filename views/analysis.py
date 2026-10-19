@@ -26,7 +26,7 @@ WINDOW = 12   # rolling-window size fixed at 12 weeks — smooth, consistent, de
 # ─────────────────────────────────────────────────────────────────────────────
 
 def render(data: Data) -> None:
-    st.title("1 · Starting analysis")
+    st.title("Step 1 · Starting analysis")
     your_words("intro")
     _four_categories()
     _conflict_landscape(data)

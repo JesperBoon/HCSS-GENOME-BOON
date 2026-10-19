@@ -1,4 +1,4 @@
-"""Page 5: case studies. For a party in a conflict: which blocks it belongs to in words and in actions, who bridges to the
+"""Step 4: case studies. For a party in a conflict: which blocks it belongs to in words and in actions, who bridges to the
 other blocks, how that moved over time, who supplies it (directly or through others), and the events behind each path.
 
 The blocks come from scripts/build_cluster_results.py. The events behind a path come from the free first page of the API.
@@ -28,8 +28,8 @@ CASES = {
                "Both have many supporters, so the question 'directly or through someone else?' matters."},
     "Iran–Israel: the networks around two adversaries": {
         "kind": "supply", "parties": ["Iran", "Israel"], "key": "case_iran",
-        "why": "Iran is the fifth-biggest receiver of reported aid and also a hub of attacks; Israel is the origin of by far the "
-               "most reported attacks. The chains from aid to attack (page 4) cluster around Iran."},
+        "why": "Iran is a hub of reported attacks and Israel is the origin of by far the most reported attacks, so the "
+               "supply networks around both are worth a closer look."},
     "Israel–Palestine: aid and the party in between": {
         "kind": "supply", "parties": ["Palestine", "Israel"], "key": "case_palestine",
         "why": "Palestine is the second-biggest receiver of reported aid, and the heaviest aid chain in the data runs "
@@ -232,7 +232,7 @@ def _supply_view(files: dict, party: int, party_name: str, names: dict, block_id
                "At most the 12 biggest suppliers and 8 intermediaries are shown. An intermediary is a country that appears on both sides "
                "in the same period; that is a **reported pattern**, it does not mean the aid it gave came from what it received. Big "
                "donors such as the USA often show up as intermediaries simply because they are also reported receiving some aid "
-               "(relief after a disaster, for example). Whether a path is more than that is what section B of page 4 tests.")
+               "(relief after a disaster, for example).")
 
     st.markdown("##### The events behind a path")
     st.warning("**Read the events.** In GENOME the class AID is wide: it also holds humanitarian exchanges and military help. "
@@ -307,7 +307,7 @@ def _mismatch_view(files: dict, res: dict, focus: int, focus_name: str, names: d
 
 
 def render(data: Data) -> None:
-    st.title("Step 5 · Case studies")
+    st.title("Step 4 · Case studies")
     files = load_edges()
     if files is None:
         st.error("No event data yet. Run `.venv/bin/python scripts/build_edge_counts.py --run` (free).")
