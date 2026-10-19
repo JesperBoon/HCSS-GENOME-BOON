@@ -1,0 +1,8 @@
+# Pinned to the versions the project was built and tested with (Python 3.12).
+requests==2.34.2
+pandas==3.0.6
+numpy==2.5.4
+pyarrow==26.0.0
+plotly==7.1.0
+streamlit==1.66.0
+anthropic==1.15.0

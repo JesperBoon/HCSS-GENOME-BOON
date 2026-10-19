@@ -1,0 +1,5 @@
+# Development dependencies (tests and checks). Install with: .venv/bin/pip install -r requirements-dev.txt
+-r requirements.txt
+pytest==9.1.1
+pyflakes==4.0.3
+tabulate==0.10.0   # only for pandas to_markdown in scripts/probe_chains.py

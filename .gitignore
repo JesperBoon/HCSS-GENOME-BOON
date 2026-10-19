@@ -1,0 +1,10 @@
+.env
+.venv/
+__pycache__/
+data/cache/
+# data/processed/ is committed on purpose: the dashboard must run after a clone without any API key
+.DS_Store
+~$*
+*.pyc
+.pytest_cache/
+documents/

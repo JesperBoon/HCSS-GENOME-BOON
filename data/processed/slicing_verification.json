@@ -1,0 +1,16 @@
+{
+ "query": "Russia \u2192 Ukraine (ASSAULT)",
+ "since": "2024-01-01",
+ "until": "2026-01-26",
+ "total": 700,
+ "paged_events": 700,
+ "sliced_events": 700,
+ "slices": 9,
+ "ids_equal": true,
+ "fields_equal": true,
+ "duplicates_in_paging": 0,
+ "credits_spent": 450,
+ "balance_before": 10000,
+ "balance_after": 9550,
+ "identical": true
+}
