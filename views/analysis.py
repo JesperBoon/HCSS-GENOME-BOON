@@ -636,11 +636,9 @@ def _verbal_vs_material(data: Data) -> None:
     if mismatch > 0:
         mism = q[is_mism].copy()
         mism["Gap"] = (mism.Actions - mism.Words).abs()
-        for pat in (mt.PATTERNS["+-"], mt.PATTERNS["-+"]):
-            rows_pat = mism[mism.Pattern == pat].sort_values("Gap", ascending=False)
-            if rows_pat.empty:
-                continue
-            st.markdown(f"##### {pat}")
+        rows_pat = mism[mism.Pattern == mt.PATTERNS["+-"]].sort_values("Gap", ascending=False)
+        if not rows_pat.empty:
+            st.markdown(f"##### {mt.PATTERNS['+-']}")
             st.dataframe(
                 rows_pat[["Country", "Toward", "Words", "Actions",
                            "Word events", "Action events"]].round(2),
