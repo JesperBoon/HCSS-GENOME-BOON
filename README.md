@@ -2,21 +2,16 @@
 
 ![HCSS](assets/hcss_logo.png)
 
-## Road to Reliability — the deliverable
+## Open the dashboard
 
-**[Read the notebook](https://htmlpreview.github.io/?https://github.com/JesperBoon/HCSS-GENOME-BOON/blob/story/Road_to_Reliability.html)** (HTML, opens in any browser, no setup needed).
+**[hcss-genome-boon.streamlit.app](https://hcss-genome-boon-wx7cuphe7nefwemmcfrkb4.streamlit.app/)** — one link, no
+setup, nothing to install.
 
-**Do countries mean what they say?** *Road to Reliability* is a narrative walk through GENOME event data asking whether
-countries' words and their material actions point the same way, country by country, conflict by conflict, and
-bloc by bloc. It is the technical assignment deliverable: data processing, analysis and communication of results,
-in that order, told as the sequence of choices that actually produced it.
+**Do countries mean what they say?** This dashboard asks whether countries' words and their material actions point
+the same way, country by country, conflict by conflict, and bloc by bloc, for the HCSS Datalab technical assignment
+2026: data processing, analysis and communication of results, all in one interactive app.
 
-Everything from here down is the wider dashboard project the notebook draws on and grew out of — kept as reference
-and as an optional "try it yourself" companion (tagged `dashboard-v1`), not itself the thing being graded.
-
----
-
-## The dashboard companion
+To run it locally instead:
 
 ```bash
 .venv/bin/pip install -r requirements.txt
