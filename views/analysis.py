@@ -439,9 +439,20 @@ def _standing(data: Data) -> None:
     sc = sc[~sc.actor_id.isin([first_id, second_id])]
 
     your_words("side_all")
-    fig, n = side_chart(sc, "side_all", first_name, second_name, "all")
+    show_breakdown = st.checkbox(
+        "Add each country's words-only and actions-only position on top of its bar",
+        key="c_breakdown",
+        help="The bar is one combined score. A country with friendly words and hostile "
+             "actions (or the reverse) can average out to a bar that looks moderate - "
+             "turn this on to see whether that is happening.",
+    )
+    fig, n = side_chart(sc, "side_all", first_name, second_name, "all", breakdown=show_breakdown)
     st.plotly_chart(fig, width="stretch")
-    st.caption(f"{n} countries have at least 3 events toward both parties.")
+    st.caption(f"{n} countries have at least 3 events toward both parties."
+              + (" Tick marks: each country's words-only (purple) and actions-only (orange) "
+                 "side score - where they land on opposite sides of the bar, or far from it, "
+                 "the combined score is hiding a words/actions split."
+                 if show_breakdown else ""))
 
     with st.expander("How is the side score calculated?"):
         st.markdown(

@@ -7,6 +7,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 
 import geo
@@ -100,8 +101,13 @@ def rolling_scores(conflict: str, first_id: int, second_id: int, window: int, mi
     return mt.rolling_scores(conflict, first_id, second_id, window, min_n, weighted)
 
 
-def side_chart(df, col, first, second, kind_label):
-    """Horizontal bars: negative = leans to `first`, positive = leans to `second`."""
+def side_chart(df, col, first, second, kind_label, breakdown=False):
+    """Horizontal bars: negative = leans to `first`, positive = leans to `second`.
+
+    If `breakdown`, also marks each country's separate words-only and actions-only side
+    score on top of its bar (when `df` has `side_verbal`/`side_material` columns) - so a
+    combined score that looks moderate can be seen for what it sometimes is: friendly words
+    and hostile actions (or the reverse) averaging out to "no clear side"."""
     d = df.dropna(subset=[col]).sort_values(col).copy()
     d["Position"] = pd.cut(d[col], [-3, -NO_SIDE, NO_SIDE, 3],
                            labels=[f"Leans {first}", "No clear side", f"Leans {second}"])
@@ -118,6 +124,15 @@ def side_chart(df, col, first, second, kind_label):
     fig.update_layout(height=max(320, 19 * len(d) + 80), margin=dict(l=0, r=10, t=10, b=0),
                       legend=dict(orientation="h", y=1.04, title=""), bargap=0.25)
     fig.add_vline(x=0, line_width=1, line_color="#1A1A1A")
+
+    if breakdown and "side_verbal" in d.columns and "side_material" in d.columns:
+        for label, dcol, color in [("Words only", "side_verbal", "#6A1B9A"),
+                                   ("Actions only", "side_material", "#EF6C00")]:
+            fig.add_trace(go.Scatter(
+                x=d[dcol], y=d["name"], mode="markers", name=label,
+                marker=dict(symbol="line-ns", size=16, line=dict(width=3, color=color)),
+                hovertemplate=f"%{{y}} — {label.lower()}: %{{x:.2f}}<extra></extra>",
+            ))
     return fig, len(d)
 
 
